@@ -4,7 +4,9 @@ from sklearn.metrics import accuracy_score,confusion_matrix,classification_repor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler,LabelEncoder
 from sklearn.neighbors import KNeighborsClassifier
-df=pd.read_csv(r"C:\Users\Nithin Reddy\Contacts\Downloads\student_placement_dataset.tmp")
+import os
+data_file = "student_placement_dataset.csv" if os.path.exists("student_placement_dataset.csv") else "student_placement_dataset.tmp"
+df = pd.read_csv(data_file)
 print(df.info())
 print(df.describe())
 print(df['placement_status'].value_counts())
@@ -23,16 +25,19 @@ ss=StandardScaler()
 X_train_scaled=ss.fit_transform(X_train)
 X_test_scaled=ss.transform(X_test)
 print(X_train_scaled)
-ks=range(1,21)
-scores=[]
+ks = range(1, 21)
+scores = []
+models = {}
 for k in ks:
-    model=KNeighborsClassifier(n_neighbors=k) 
-    model.fit(X_train_scaled,y_train)
-    y_pred=model.predict(X_test_scaled)
-    scores.append(accuracy_score(y_test,y_pred))
-best_ks=ks[int(np.argmax(scores))]
-print("Best K value:",best_ks,"Accuracy:",max(scores))
-acc=accuracy_score(y_test,y_pred)
+    model = KNeighborsClassifier(n_neighbors=k) 
+    model.fit(X_train_scaled, y_train)
+    y_k_pred = model.predict(X_test_scaled)
+    scores.append(accuracy_score(y_test, y_k_pred))
+    models[k] = (model, y_k_pred)
+best_ks = ks[int(np.argmax(scores))]
+best_model, y_pred = models[best_ks]
+print("Best K value:", best_ks, "Accuracy:", max(scores))
+acc = accuracy_score(y_test, y_pred)
 cm=confusion_matrix(y_test,y_pred)
 cr=classification_report(y_test,y_pred,target_names=le.classes_)
 print("Accuracy:",acc)

@@ -1,126 +1,115 @@
-# 🎓 Student Placement Prediction using K-Nearest Neighbors (KNN)
-## 📌 Overview
+# 🎓 Student Placement Prediction with K-Nearest Neighbors (KNN)
 
-This project is a Machine Learning-based student placement prediction system built using the **K-Nearest Neighbors (KNN)** algorithm.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Scikit-Learn](https://img.shields.io/badge/Library-scikit--learn-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Library-pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-The model analyzes student-related academic and skill-based attributes to predict whether a student is likely to get placed.
+A supervised machine learning classification project that models university student placement outcomes using the **K-Nearest Neighbors (KNN)** algorithm. Demonstrates feature engineering on multi-type student attributes, feature scaling, and empirical hyperparameter tuning for the optimal neighbor count ($K$).
 
-This project helped me understand the complete ML workflow including:
+---
 
-* Data preprocessing
-* Feature selection
-* Model training
-* Prediction
-* Accuracy evaluation
+## 📌 Project Overview
 
-## 🚀 Features
+Predicting student placement outcomes helps academic advisors and students identify areas needing skill development before campus recruitment cycles. 
 
-✅ Student placement prediction
-✅ KNN classification model
-✅ Data preprocessing and training
-✅ Accuracy evaluation
-✅ Simple and beginner-friendly ML workflow
+This project implements a complete, structured machine learning pipeline:
+- **Data Preprocessing:** Handled missing values, feature selection, and categorical encoding.
+- **Feature Scaling:** Applied `StandardScaler` to prevent high-magnitude features from dominating Euclidean distance calculations.
+- **Hyperparameter Search:** Evaluated neighbor parameters $k \in [1, 20]$ to determine the optimal bias-variance tradeoff.
+- **Model Evaluation:** Scored with accuracy, confusion matrices, and detailed classification reports.
 
-## 🛠 Tech Stack
+---
 
-| Technology   | Purpose              |
-| ------------ | -------------------- |
-| Python       | Core programming     |
-| Pandas       | Data handling        |
-| NumPy        | Numerical operations |
-| Matplotlib   | Visualization        |
-| Scikit-learn | Machine Learning     |
+## 📊 Dataset Schema
 
-## 🤖 Machine Learning Algorithm Used
+The dataset (`student_placement_dataset.csv`) contains multi-dimensional student records:
 
-#K-Nearest Neighbors (KNN)
+| Feature Name | Type | Description |
+| :--- | :--- | :--- |
+| `student_id` | Numerical | Identifier (dropped during preprocessing) |
+| `age` | Numerical | Student age |
+| `gender` | Categorical | Student gender |
+| `branch` | Categorical | Academic department (CSE, IT, ECE, EEE, Mechanical) |
+| `cgpa` | Numerical | Cumulative Grade Point Average |
+| `internship_count` | Numerical | Number of completed internships |
+| `project_count` | Numerical | Number of completed technical projects |
+| `certifications_count`| Numerical | Number of technical certifications |
+| `coding_skills_score` | Numerical | Standardized coding assessment score |
+| `communication_skills_score` | Numerical | Communication assessment score |
+| `soft_skills_score` | Numerical | Behavioral & soft skills score |
+| `hackathon_participation` | Categorical | Prior hackathon participation (Yes / No) |
+| **`placement_status`** | **Target** | Placement outcome (**Placed** / **Not Placed**) |
 
-KNN is a supervised machine learning algorithm used for classification problems.
-It predicts the output based on the majority class among the nearest data points.
+---
 
-## 📊 Dataset Information
+## 🏗️ Pipeline Architecture
 
-The dataset contains student-related attributes used to determine placement status.
+```mermaid
+flowchart TD
+    A[Student Placement Dataset] --> B[Data Cleaning & Feature Pruning]
+    B --> C[One-Hot Encoding: branch, hackathon]
+    B --> D[Label Encoding: placement_status]
+    C --> E[80/20 Train-Test Split]
+    E --> F[Feature Standardization: StandardScaler]
+    F --> G[Grid Search for Optimal K: k=1..20]
+    G --> H[Final KNeighborsClassifier Evaluation]
+```
 
-## Features Used
+---
 
-* CGPA
-* IQ
-* Communication Skills
-* Academic Performance
-* Other placement-related attributes
+## 🚀 Getting Started
 
-## Target Variable
+### 1. Clone the Repository
+```bash
+git clone https://github.com/usha1101/Student_placement_KNN.git
+cd Student_placement_KNN
+```
 
-* Placed
-* Not Placed
+### 2. Set Up Virtual Environment
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
 
-# ⚙️ Project Workflow
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+```
 
-Dataset
-   ↓
-Data Preprocessing
-   ↓
-Train-Test Split
-   ↓
-Model Training (KNN)
-   ↓
-Prediction
-   ↓
-Accuracy Evaluation
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-
-# 📈 Concepts Learned
-
-Through this project, I learned:
-
-* Supervised Learning
-* Classification Problems
-* KNN Algorithm
-* Train-Test Split
-* Model Evaluation
-* Accuracy Score
-* Data Handling using Pandas
-* ML Workflow
-
-
-# ▶️ How to Run the Project
-
-## 1️⃣ Clone Repository
-bash:
-git clone https://github.com/usha1101/Student_Placement_KNN.git
-
-## 2️⃣ Open Project Folder
-bash:
-cd Student_Placement_KNN
-
-## 3️⃣ Install Required Libraries
-bash:
-pip install pandas numpy matplotlib scikit-learn
-
-## 4️⃣ Run Project
-bash:
+### 4. Execute the Pipeline
+```bash
 python Student_Placement_KNN.py
+```
 
-# 🔮 Future Improvements
+---
 
-* Improve prediction accuracy
-* Add graphical user interface (GUI)
-* Deploy as a web application
-* Use larger real-world datasets
-* Compare multiple ML algorithms
+## 📂 Repository Contents
 
-# 💡 Key Takeaways
+```text
+Student_placement_KNN/
+├── .gitignore                      # Python & cache ignore rules
+├── README.md                       # Comprehensive project documentation
+├── Student_Placement_KNN.py        # ML training and evaluation script
+├── requirements.txt                # Python environment requirements
+└── student_placement_dataset.csv   # Student placement benchmark dataset
+```
 
-This project strengthened my understanding of:
+---
 
-* Machine Learning fundamentals
-* Data preprocessing
-* Model building and evaluation
-* Practical implementation of ML concepts
+## 👩‍💻 Author
 
-# 👩‍💻 Author
+**Ushashree M**  
+- B.Tech Artificial Intelligence & Data Science, Reva University  
+- GitHub: [@usha1101](https://github.com/usha1101)  
 
-**Ushashree Malluri**
+---
 
-⭐ If you found this project interesting, feel free to star the repository!
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
